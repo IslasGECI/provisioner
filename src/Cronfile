@@ -3,19 +3,20 @@ SHELL=/bin/bash
 
 # islasgeci.dev
 0 7 * * 1-5 docker pull islasgeci/development_server_setup:latest && source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume development_server_setup:/src islasgeci/development_server_setup:latest
-0 17 * * 1-5 source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume development_server_setup:/src islasgeci/development_server_setup:latest make destroy_server
+0 17 * * 1-5 source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume development_server_setup:/src islasgeci/development_server_setup:latest make destroy_server && docker volume rm development_server_setup
 
 # islasgeci.org
-50 0 * * * source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume islasgeci.org:/src islasgeci/islasgeci.org:latest make destroy_server
-10 1 * * * docker pull islasgeci/islasgeci.org:latest && source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume islasgeci.org:/src islasgeci/islasgeci.org:latest
+0 0 1 * * docker-compose run webserver make destroy_server
+0 1 1 * * docker-compose run webserver
 
 # reproducibility.dev
-50 0 * * * source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume reproducibility.dev:/src islasgeci/reproducibility.dev:latest make destroy_server
-10 1 * * * docker pull islasgeci/reproducibility.dev:latest && source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume reproducibility.dev:/src islasgeci/reproducibility.dev:latest
+0 0 1 * * docker-compose run reproducibility make destroy_server
+0 1 1 * * docker-compose run reproducibility
 
 # Robinson server: robinsondata.icu
 50 0 * * * source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume robinson_server:/src islasgeci/robinson_server:latest make destroy_server
-10 1 * * * docker pull islasgeci/robinson_server:latest && source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume robinson_server:/src islasgeci/robinson_server:latest
+0 1 * * * cd /root/robinson_data && git checkout develop && git pull
+10 1 * * * docker pull islasgeci/robinson_server:latest && source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume /root/robinson_data:/root/robinson_data --volume robinson_server:/src islasgeci/robinson_server:latest && docker volume rm robinson_server
 
 # Health checks
 0 * * * * curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/c48ff6b9-56e8-418c-83a2-dba0c98c84d3
