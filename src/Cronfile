@@ -14,9 +14,9 @@ SHELL=/bin/bash
 0 1 1 * * docker-compose run reproducibility
 
 # Robinson server: robinsondata.icu
-50 0 * * * source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume robinson_server:/src islasgeci/robinson_server:latest make destroy_server
+50 0 * * * source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume robinson_server:/src islasgeci/robinson_server:latest make destroy_server && docker volume rm robinson_server
 0 1 * * * cd /root/robinson_data && git checkout develop && git pull
-10 1 * * * docker pull islasgeci/robinson_server:latest && source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume /root/robinson_data:/root/robinson_data --volume robinson_server:/src islasgeci/robinson_server:latest && docker volume rm robinson_server
+10 1 * * * docker pull islasgeci/robinson_server:latest && source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume /root/robinson_data:/root/robinson_data --volume robinson_server:/src islasgeci/robinson_server:latest
 
 # Health checks
 0 * * * * curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/c48ff6b9-56e8-418c-83a2-dba0c98c84d3
