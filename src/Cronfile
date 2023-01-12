@@ -3,7 +3,7 @@ SHELL=/bin/bash
 
 # islasgeci.dev
 0 7 * * 1-5 docker pull islasgeci/development_server_setup:latest && source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume development_server_setup:/src islasgeci/development_server_setup:latest
-0 17 * * 1-5 source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume development_server_setup:/src islasgeci/development_server_setup:latest make destroy_server && docker volume rm development_server_setup
+0 18 * * 1-5 source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume development_server_setup:/src islasgeci/development_server_setup:latest make destroy_server && docker volume rm development_server_setup
 
 # islasgeci.org
 0 0 1 * * docker-compose run webserver make destroy_server
