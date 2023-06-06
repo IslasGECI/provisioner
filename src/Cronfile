@@ -10,8 +10,8 @@ SHELL=/bin/bash
 0 1 1 * * docker-compose run webserver
 
 # reproducibility.dev
-0 0 1 * * docker-compose run reproducibility make destroy_server
-0 1 1 * * docker-compose run reproducibility
+0 6 * * * source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume reproducibility_inspector_setup:/src islasgeci/reproducibility_inspector_setup:latest make destroy_server && docker volume rm reproducibility_inspector_setup
+0 16 * * * docker pull islasgeci/reproducibility_inspector_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume reproducibility_inspector_setup:/src islasgeci/reproducibility_inspector_setup:latest
 
 # Robinson server: robinsondata.icu
 50 0 * * * source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume robinson_server:/src islasgeci/robinson_server:latest make destroy_server && docker volume rm robinson_server
