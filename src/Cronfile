@@ -3,14 +3,15 @@ SHELL=/bin/bash
 
 # islasgeci.dev
 0 7 * * 1-5 docker pull islasgeci/development_server_setup:latest && source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume development_server_setup:/src islasgeci/development_server_setup:latest
+30 7 * * 1-5 docker pull islasgeci/development_server_setup:latest && source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume development_server_setup:/src islasgeci/development_server_setup:latest
 0 18 * * 1-5 source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume development_server_setup:/src islasgeci/development_server_setup:latest make destroy_server && docker volume rm development_server_setup
 
 # islasgeci.org
 0 0 1 * * docker-compose run webserver make destroy_server
 0 1 1 * * docker-compose run webserver
 
-# reproducibility.dev
-0 6 * * * source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume reproducibility_inspector_setup:/src islasgeci/reproducibility_inspector_setup:latest make destroy_server && docker volume rm reproducibility_inspector_setup
+# Reproducibility Inspector
+0 6 * * * source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --env INSPECTOR_IP --rm --volume /root/.ssh:/root/.ssh --volume reproducibility_inspector_setup:/src islasgeci/reproducibility_inspector_setup:latest make destroy_server && docker volume rm reproducibility_inspector_setup
 0 16 * * * docker pull islasgeci/reproducibility_inspector_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume reproducibility_inspector_setup:/src islasgeci/reproducibility_inspector_setup:latest
 
 # Robinson server: robinsondata.icu
