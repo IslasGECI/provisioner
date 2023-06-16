@@ -12,6 +12,7 @@ SHELL=/bin/bash
 
 # Reproducibility Inspector
 0 16 * * * docker pull islasgeci/reproducibility_inspector_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume /root/.vault:/root/.vault --volume reproducibility_inspector_setup:/workdir/src islasgeci/reproducibility_inspector_setup:latest
+30 16 * * * docker pull islasgeci/reproducibility_inspector_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume /root/.vault:/root/.vault --volume reproducibility_inspector_setup:/workdir/src islasgeci/reproducibility_inspector_setup:latest
 0 6 * * * source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume reproducibility_inspector_setup:/workdir/src islasgeci/reproducibility_inspector_setup:latest make destroy_server && docker volume rm reproducibility_inspector_setup
 
 # Robinson server: robinsondata.icu
