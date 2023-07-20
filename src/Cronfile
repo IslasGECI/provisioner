@@ -7,9 +7,9 @@ SHELL=/bin/bash
 0 16 * * 1-5 source /root/.vault/.secrets && docker run --env DO_PAT --rm --volume /root/.ssh/id_rsa:/root/.ssh/id_rsa --volume development_server_setup:/src islasgeci/development_server_setup:latest make destroy_server && docker volume rm development_server_setup
 
 # Web server: islasgeci.org
-0 2 * * * source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume islasgeci.org_setup:/workdir/src islasgeci/islasgeci.org_setup:latest make destroy_server && docker volume rm islasgeci.org_setup
-25 2 * * * docker pull islasgeci/islasgeci.org_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume /root/.vault:/root/.vault --volume islasgeci.org_setup:/workdir/src islasgeci/islasgeci.org_setup:latest
-50 2 * * * docker pull islasgeci/islasgeci.org_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume /root/.vault:/root/.vault --volume islasgeci.org_setup:/workdir/src islasgeci/islasgeci.org_setup:latest
+10 15 * * * source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume islasgeci.org_setup:/workdir/src islasgeci/islasgeci.org_setup:latest make destroy_server && docker volume rm islasgeci.org_setup
+25 15 * * * docker pull islasgeci/islasgeci.org_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume /root/.vault:/root/.vault --volume islasgeci.org_setup:/workdir/src islasgeci/islasgeci.org_setup:latest
+50 15 * * * docker pull islasgeci/islasgeci.org_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume /root/.vault:/root/.vault --volume islasgeci.org_setup:/workdir/src islasgeci/islasgeci.org_setup:latest
 
 # Reproducibility Inspector
 0 16 * * * docker pull islasgeci/reproducibility_inspector_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume /root/.vault:/root/.vault --volume reproducibility_inspector_setup:/workdir/src islasgeci/reproducibility_inspector_setup:latest
