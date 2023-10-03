@@ -2,9 +2,9 @@
 SHELL=/bin/bash
 
 # Development server: islasgeci.dev
-10 7 * * 1-5 docker pull islasgeci/development_server_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume development_server_setup:/src islasgeci/development_server_setup:latest
-30 7 * * 1-5 docker pull islasgeci/development_server_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume development_server_setup:/src islasgeci/development_server_setup:latest
-50 15 * * 1-5 source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume development_server_setup:/src islasgeci/development_server_setup:latest make destroy_server && docker volume rm development_server_setup
+10 7 * * 1-5 docker pull islasgeci/development_server_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume development_server_setup:/workdir/src islasgeci/development_server_setup:latest
+30 7 * * 1-5 docker pull islasgeci/development_server_setup:latest && source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume development_server_setup:/workdir/src islasgeci/development_server_setup:latest
+50 15 * * 1-5 source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume development_server_setup:/workdir/src islasgeci/development_server_setup:latest make destroy_server && docker volume rm development_server_setup
 
 # Web server: islasgeci.org
 10 15 * * * source /root/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /root/.ssh:/root/.ssh --volume islasgeci.org_setup:/workdir/src islasgeci/islasgeci.org_setup:latest make destroy_server
