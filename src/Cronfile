@@ -3,10 +3,10 @@ SHELL=/bin/bash
 
 # Development server: islasgeci.dev
 20 7 * * 1-5 docker pull islasgeci/development_server_setup:latest && source /home/ciencia_datos/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /home/ciencia_datos/.ssh:/root/.ssh --volume development_server_setup:/workdir/src islasgeci/development_server_setup:latest
-40 15 * * 1-5 source /home/ciencia_datos/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /home/ciencia_datos/.ssh:/root/.ssh --volume development_server_setup:/workdir/src islasgeci/development_server_setup:latest make destroy_server && docker volume rm development_server_setup
+40 15 * * 1-5 source /home/ciencia_datos/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /home/ciencia_datos/.ssh:/root/.ssh --volume development_server_setup:/workdir/src islasgeci/development_server_setup:latest make destroy_server
 
 # Web server: islasgeci.org
-20 15 * * * source /home/ciencia_datos/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /home/ciencia_datos/.ssh:/root/.ssh --volume islasgeci.org_setup:/workdir/src islasgeci/islasgeci.org_setup:latest make destroy_server && docker volume rm islasgeci.org_setup
+20 15 * * * source /home/ciencia_datos/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /home/ciencia_datos/.ssh:/root/.ssh --volume islasgeci.org_setup:/workdir/src islasgeci/islasgeci.org_setup:latest make destroy_server
 40 15 * * * docker pull islasgeci/islasgeci.org_setup:latest && source /home/ciencia_datos/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /home/ciencia_datos/.ssh:/root/.ssh --volume /home/ciencia_datos/.vault:/root/.vault --volume islasgeci.org_setup:/workdir/src islasgeci/islasgeci.org_setup:latest
 
 # Reproducibility Inspector
