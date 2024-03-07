@@ -11,7 +11,7 @@ SHELL=/bin/bash
 
 # Reproducibility Inspector
 20 16 * * * docker pull islasgeci/reproducibility_inspector_setup:latest && source /home/ciencia_datos/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /home/ciencia_datos/.ssh:/root/.ssh --volume /home/ciencia_datos/.vault:/root/.vault --volume reproducibility_inspector_setup:/workdir/src islasgeci/reproducibility_inspector_setup:latest
-40 1 * * * source /home/ciencia_datos/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /home/ciencia_datos/.ssh:/root/.ssh --volume reproducibility_inspector_setup:/workdir/src islasgeci/reproducibility_inspector_setup:latest make destroy_server && docker volume rm reproducibility_inspector_setup
+40 7 * * * source /home/ciencia_datos/.vault/.secrets && docker run --env AZURE_PASSWORD --env AZURE_USERNAME --rm --volume /home/ciencia_datos/.ssh:/root/.ssh --volume reproducibility_inspector_setup:/workdir/src islasgeci/reproducibility_inspector_setup:latest make destroy_server && docker volume rm reproducibility_inspector_setup
 
 # Health checks
 0 * * * * curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/c48ff6b9-56e8-418c-83a2-dba0c98c84d3
