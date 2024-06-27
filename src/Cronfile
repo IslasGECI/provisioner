@@ -15,3 +15,6 @@ SHELL=/bin/bash
 
 # Health checks
 0 * * * * curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/c48ff6b9-56e8-418c-83a2-dba0c98c84d3
+
+# Docker prune
+0 * * * * docker image prune --all --force
