@@ -28,6 +28,6 @@ ssh-keygen
 ```
 ls -l /etc/localtime
 timedatectl
-timedatectl set America/Los_Angeles
+timedatectl set-timezone America/Los_Angeles
 ```
 - Copiamos el crontab del repositorio [`provisioner`](https://github.com/IslasGECI/provisioner/blob/develop/src/Cronfile)
