@@ -3,7 +3,7 @@
 ## 👩🏿‍💻 Crear provisionador en Azure
 - Usamos las características por defecto del servicio de MV en Azure.
 - Agregamos la clave pública de un miembro del equipo. 
-- Usuario: `ciencia_datos`
+- Usuario: `geci`
 - Nombre de computadora: `provisioner`
 
 ## 🐋 Instalar Docker en el servidor
@@ -19,9 +19,9 @@ sudo reboot
 ```
 ## 🛂 Administrar las credenciales
 - 🔐🧐🚨Creamos la bóveda de los secretos con las variables necesarias.
-- En la máquina virtual agregamos una _clave ssh_ para el usuario `ciencia_datos`:
+- En la máquina virtual agregamos una _clave ssh_ para el usuario `geci`:
 ```bash
-ssh-keygen
+ssh-keygen -t rsa
 ```
 ## ⏳ Programar los cronjobs para cada servidor
 - Verificamos que el horario del servidor sea el de Ensenada (el ombligo del universo):
