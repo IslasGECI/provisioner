@@ -11,8 +11,8 @@ SHELL=/bin/bash
 40 15 * * 0-4 docker pull islasgeci/islasgeci.org_setup:latest && source /home/geci/.vault/.secrets && docker run --env AWS_ACCESS_KEY_ID --env AWS_SECRET_ACCESS_KEY --rm --volume /home/geci/.ssh:/root/.ssh --volume /home/geci/.vault:/root/.vault --volume islasgeci.org_setup:/workdir/state islasgeci/islasgeci.org_setup:latest
 
 # Reproducibility Inspector
-20 16 * * * docker pull islasgeci/reproducibility_inspector_setup:latest && source /home/geci/.vault/.secrets && docker run --env AZURE_CLIENT_ID --env AZURE_CLIENT_SECRET --env AZURE_TENANT_ID --env AZURE_SUBSCRIPTION_ID --env ARM_CLIENT_ID --env ARM_CLIENT_SECRET --env ARM_TENANT_ID --env ARM_SUBSCRIPTION_ID --rm --volume /home/geci/.ssh:/root/.ssh --volume /home/geci/.vault:/root/.vault --volume reproducibility_inspector_setup:/workdir/state islasgeci/reproducibility_inspector_setup:latest
-40 7 * * * source /home/geci/.vault/.secrets && docker run --env AZURE_CLIENT_ID --env AZURE_CLIENT_SECRET --env AZURE_TENANT_ID --env AZURE_SUBSCRIPTION_ID --env ARM_CLIENT_ID --env ARM_CLIENT_SECRET --env ARM_TENANT_ID --env ARM_SUBSCRIPTION_ID --rm --volume /home/geci/.ssh:/root/.ssh --volume reproducibility_inspector_setup:/workdir/state islasgeci/reproducibility_inspector_setup:latest make destroy_server
+20 16 * * * docker pull islasgeci/reproducibility_inspector_setup:latest && source /home/geci/.vault/.secrets && docker run --env ARM_CLIENT_ID --env ARM_CLIENT_SECRET --env ARM_TENANT_ID --env ARM_SUBSCRIPTION_ID --rm --volume /home/geci/.ssh:/root/.ssh --volume /home/geci/.vault:/root/.vault --volume reproducibility_inspector_setup:/workdir/state islasgeci/reproducibility_inspector_setup:latest
+40 7 * * * source /home/geci/.vault/.secrets && docker run --env ARM_CLIENT_ID --env ARM_CLIENT_SECRET --env ARM_TENANT_ID --env ARM_SUBSCRIPTION_ID --rm --volume /home/geci/.ssh:/root/.ssh --volume reproducibility_inspector_setup:/workdir/state islasgeci/reproducibility_inspector_setup:latest make destroy_server
 
 # Health checks
 0 * * * * curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/c48ff6b9-56e8-418c-83a2-dba0c98c84d3
