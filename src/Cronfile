@@ -14,6 +14,11 @@ SHELL=/bin/bash
 00 16 * * * docker pull islasgeci/reproducibility_inspector_setup:latest && source /home/geci/.vault/.secrets && docker run --env ARM_CLIENT_ID --env ARM_CLIENT_SECRET --env ARM_TENANT_ID --env ARM_SUBSCRIPTION_ID --rm --volume /home/geci/.ssh:/root/.ssh --volume /home/geci/.vault:/root/.vault --volume reproducibility_inspector_setup:/workdir/state islasgeci/reproducibility_inspector_setup:latest
 40 7 * * * source /home/geci/.vault/.secrets && docker run --env ARM_CLIENT_ID --env ARM_CLIENT_SECRET --env ARM_TENANT_ID --env ARM_SUBSCRIPTION_ID --rm --volume /home/geci/.ssh:/root/.ssh --volume reproducibility_inspector_setup:/workdir/state islasgeci/reproducibility_inspector_setup:latest make destroy_server
 
+# Recurrator
+00 2 * * * source /home/geci/.vault/.secrets && docker run --env DIGITALOCEAN_RECURRATOR_TOKEN --env TAILSCALE_OAUTH_CLIENT_ID --env TAILSCALE_OAUTH_CLIENT_SECRET --rm --volume /home/geci/.ssh:/root/.ssh --volume /home/geci/.vault:/root/.vault --volume recurrator_setup:/workdir/state evaristor/recurrator_setup:latest make destroy_server
+30 2 * * * curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/a5ef94f4-8de1-4ab5-8477-9929ca007b78/start; docker pull evaristor/recurrator_setup:latest && source /home/geci/.vault/.secrets && docker run --env DIGITALOCEAN_RECURRATOR_TOKEN --env TAILSCALE_OAUTH_CLIENT_ID --env TAILSCALE_OAUTH_CLIENT_SECRET --rm --volume /home/geci/.ssh:/root/.ssh --volume /home/geci/.vault:/root/.vault --volume recurrator_setup:/workdir/state evaristor/recurrator_setup:latest
+0 3 * * * body="$(curl -fsS -m 10 --retry 5 http://recurrator:8000/openapi.json)" && grep -Fq 'FastAPI' <<<"$body" && grep -Fq '/task/' <<<"$body" && curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/a5ef94f4-8de1-4ab5-8477-9929ca007b78 || curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/a5ef94f4-8de1-4ab5-8477-9929ca007b78/fail
+
 # Health checks
 0 * * * * curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/c48ff6b9-56e8-418c-83a2-dba0c98c84d3
 
